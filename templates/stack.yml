@@ -42,7 +42,7 @@ Resources:
       Tags:
         - Key: "Name"
           Value: { "Fn::Join": ["", [ { "Ref": "AWS::StackName" }, "-instance" ] ] }
-          PropogateAtLaunch: "true"
+          PropagateAtLaunch: "true"
   AutoScalingLaunchConfiguration:
     Type: "AWS::AutoScaling::LaunchConfiguration"
     Properties:
