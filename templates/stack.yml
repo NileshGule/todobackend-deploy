@@ -193,7 +193,7 @@ Resources:
             - "--module todobackend.wsgi"
             - "--master"
             - "--die-on-term"
-        - Name: ngnix
+        - Name: nginx
           Image: nileshgule/todobackend-nginx
           Memory: 300
           PortMappings:
