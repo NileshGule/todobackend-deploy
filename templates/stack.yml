@@ -57,7 +57,7 @@ Resources:
         "#!/bin/bash\n",
         "echo ECS_CLUSTER=", { "Ref": "EcsCluster" }, " >> /etc/ecs/ecs.config\n"
         ] ] }
-      }
+        }
   EC2InstanceSecurityGroup:
     Type: "AWS::EC2::SecurityGroup"
     Properties:
@@ -72,7 +72,7 @@ Resources:
           FromPort: "22"
           ToPort: "22"
           CidrIp: "0.0.0.0/0"
-        Tags:
+      Tags:
           - Key: "Name"
             Value: { "Fn::Join": ["", [ { "Ref": "AWS::StackName" }, "-instance-sg" ] ] }
   EC2InstanceProfile:
@@ -92,12 +92,12 @@ Resources:
             "Action": [ "sts:AsumeRole" ]
           }
         ]
-      }
+        }
       Path: "/"
       ManagedPolicyArns:
         - "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
   DbInstance:
-    Type: "AWS::RDS::DbInstance"
+    Type: "AWS::RDS::DBInstance"
     Properties:
       DBSubnetGroupName: { "Ref": "DbSubnetGroup" }
       MultiAZ: "false"
@@ -106,13 +106,13 @@ Resources:
       StorageType: "gp2"
       DBInstanceClass: "db.t2.micro"
       DBName: "todobackend"
-      Engine: "MySQL",
+      Engine: "MySQL"
       EngineVersion: "5.6"
       MasterUsername: { "Ref": "DbUsername" }
       MasterUserPassword: { "Ref": "DbPassword" }
       VPCSecurityGroups:
         - { "Ref": "DBSecurityGroup" }
-        Tags:
+      Tags:
           - Key: "Name"
             Value: { "Fn::Join": ["", [ { "Ref": "AWS::StackName" }, "-db" ] ] }
   DBSecurityGroup:
@@ -162,11 +162,11 @@ Resources:
           FromPort: "80"
           ToPort: "80"
           CidrIp: "0.0.0.0/0"
-        Tags:
+      Tags:
           - Key: "Name"
             Value: { "Fn::Join": ["", [ { "Ref": "AWS::StackName" }, "-elb-sg" ] ] }
   EcsCluster:
-    Type: "AWS::ECS::EcsCluster"
+    Type: "AWS::ECS::Cluster"
   TodobackendTaskDefinition:
     Type: "AWS::ECS::TaskDefinition"
     Properties:
@@ -229,32 +229,32 @@ Resources:
         - Name: webroot
           Host:
             SourcePath: /ecs/webroot
-    TodobackendService:
-      Type: "AWS::ECS::Service"
-      Properties:
-        TaskDefinition: { "Ref": "TodobackendTaskDefinition" }
-        Cluster: { "Ref": "EcsCluster" }
-        LoadBalancers:
-          - ContainerName: "nginx"
-            ContainerPort: "8000"
-            LoadBalancerName: { "Ref": "ElasticLoadBalancer" }
-        Role: { "Ref": "EcsServiceRole" }
-        DesiredCount: 0
+  TodobackendService:
+    Type: "AWS::ECS::Service"
+    Properties:
+      TaskDefinition: { "Ref": "TodobackendTaskDefinition" }
+      Cluster: { "Ref": "EcsCluster" }
+      LoadBalancers:
+        - ContainerName: "nginx"
+          ContainerPort: "8000"
+          LoadBalancerName: { "Ref": "ElasticLoadBalancer" }
+      Role: { "Ref": "EcsServiceRole" }
+      DesiredCount: 0
   EcsServiceRole:
     Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument: {
-        "Version": "2012-10-17"
+        "Version": "2012-10-17",
         "Statement": [
           {
-            "Effect": "Allow"
+            "Effect": "Allow",
             "Principal": {
                 "Service": [ "ecs.amazonaws.com" ]
               },
-              "Action": [ "sts:AssumeRole" ]
+            "Action": [ "sts:AssumeRole" ]
           }
         ]
-      }
+        }
       Path: "/"
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole
