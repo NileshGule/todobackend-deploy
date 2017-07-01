@@ -34,7 +34,7 @@ Resources:
   AutoScalingGroup:
     Type: "AWS::AutoScaling::AutoScalingGroup"
     Properties:
-      VPCZoneIdentifies: [ { "Ref": "SubnetId" } ]
+      VPCZoneIdentifier: [ { "Ref": "SubnetId" } ]
       LaunchConfigurationName: { "Ref": "AutoScalingLaunchConfiguration" }
       MinSize: 0
       MaxSize: 2
@@ -46,7 +46,7 @@ Resources:
   AutoScalingLaunchConfiguration:
     Type: "AWS::AutoScaling::LaunchConfiguration"
     Properties:
-      ImageId: aim-2428ab47
+      ImageId: ami-2428ab47
       InstanceType: t2.micro
       KeyName: { "Ref": "KeyPair" }
       IamInstanceProfile: { "Ref": "EC2InstanceProfile" }
