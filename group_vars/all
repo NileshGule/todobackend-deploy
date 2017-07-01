@@ -1,10 +1,10 @@
 ---
-vpc_id: vpc-675c2902
-subnet_id: subnet-8ae2a6fd
+vpc_id: vpc-a51f61c1
+subnet_id: subnet-6cf8d11a
 ec2_keypair: admin
 instance_count: 2
 db_subnets:
-  - subnet-8ae2a6fd
-  - subnet-37633d52
-db_availability_zone: ap-southeast-1
+  - subnet-6cf8d11a
+  - subnet-76bdb912
+db_availability_zone: ap-southeast-1a
 db_username: todobackend
