@@ -215,7 +215,7 @@ Resources:
           Memory: 450
           Environment:
             - Name: DJANGO_SETTINGS_MODULE
-              Value: todobacken.settings.release
+              Value: todobackend.settings.release
             - Name: MYSQL_HOST
               Value: { "Fn::GetAtt": ["DbInstance", "Endpoint.Address"] }
             - Name: MYSQL_USER
